@@ -1,5 +1,7 @@
 package Array;
 
+import List.Node;
+
 public class Queue {
 
     private Element array[];
@@ -40,5 +42,32 @@ public class Queue {
         }
         return null;
     }
+    public void doubleQueue(){
+       Element[] newQueue = new Element[2*N];
+        int i = first;
+        int j = 0;
+        while (i != last) {
+            newQueue[j] = array[i];
+            i = (i + 1) % N;
+            j++;
+        }
 
+        newQueue[j] = array[last]; // Copy the last element
+
+        first = 0;
+        last = j;
+        N   = 2*N;
+        array = newQueue;
+    }
+
+    int largest (){
+        int temp = first;
+        int largest = Integer.MIN_VALUE;
+
+        while (temp != last){
+            if ((array[temp].getData() > largest)) {largest = array[temp].getData();}
+            temp++;
+        }
+        return largest;
+    }
 }

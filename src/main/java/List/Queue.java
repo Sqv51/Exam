@@ -33,4 +33,19 @@ public class Queue {
         }
         return result;
     }
+    void moveToRear(){
+        Node r = dequeue();
+        enqueue(r);
+    }
+
+    int largest (){
+        Node temp = first;
+        int largest = Integer.MIN_VALUE;
+        while (temp != last){
+            if (temp.data > largest){largest = temp.data;}
+            temp = temp.next;
+        }
+        return largest;
+    }
+
 }
