@@ -1,7 +1,9 @@
 package Tree;
 
+
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 public class Tree {
 
@@ -133,6 +135,41 @@ public class Tree {
             return 1;
         }
         return 0;
+    }
+
+    //exercise24 binary tree versiyon
+    public int leftistCount() {
+        return leftistCount(root);
+    }
+
+    private int leftistCount(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int count = 0;
+
+        // Add your conditions for counting nodes here
+        if (node.right == null && node.left != null) {
+            count++;
+        }
+
+        // Recursive calls for left and right subtrees
+        count += leftistCount(node.left);
+        count += leftistCount(node.right);
+
+        return count;
+    }
+
+    //excecise 13
+    int height(TreeNode root){
+        if(root == null){return 0;}
+
+        int leftheight = height(root.left);
+        int rightheight = height(root.right);
+
+        return 1 + Integer.max(leftheight,rightheight);
+
     }
 
 }
