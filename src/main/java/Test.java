@@ -9,7 +9,7 @@ public class Test {
 
     public static void main(String[] args){
         //binary(11);
-        DoublyLinkedList mylist = new DoublyLinkedList();
+        /*DoublyLinkedList mylist = new DoublyLinkedList();
         for (int i = 0; i < 20; i++) {
             Node myNode = new Node(i%5);
             mylist.insertLast(myNode);
@@ -17,7 +17,12 @@ public class Test {
 
         System.out.println(mylist);
         System.out.println(mylist.getEvenOnes());
-        mylist.soe(21);
+        mylist.soe(21);*/
+        Tree tree = new Tree();
+        for (int i = 0; i < 10; i++) {
+            tree.iterativeInsert(new TreeNode(i));
+        }
+        System.out.println(tree.leafCount());
     }
     static void binary(int N){
         int digit;

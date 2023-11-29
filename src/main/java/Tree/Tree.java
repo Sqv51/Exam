@@ -109,4 +109,30 @@ public class Tree {
         }
     }
 
+    public int leafCount() {
+        return leafCount2(root,0);
+    }
+
+    private int leafCount2(TreeNode node, int count) {
+        if (node != null) {
+            int temp = count;
+            count += isLeaf(node.left);
+            count += isLeaf(node.right);
+            count += leafCount2(node.left, temp);
+            count += leafCount2(node.right, temp);
+            return count;
+        }
+        return 0;
+    }
+
+    private int isLeaf(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.left == null && node.right == null) {
+            return 1;
+        }
+        return 0;
+    }
+
 }
