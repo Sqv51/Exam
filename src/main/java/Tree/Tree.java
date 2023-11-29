@@ -1,5 +1,8 @@
 package Tree;
 
+import java.util.List;
+import java.util.Random;
+
 public class Tree {
 
     protected TreeNode root;
@@ -40,6 +43,64 @@ public class Tree {
             }
         }
         insertChild(parent, node);
+    }
+
+    //tree excecises 7
+    TreeNode randomLeaf(){
+        List<TreeNode> leafNodes = null;
+        collectLeafNodes(root,leafNodes);
+        Random random = new Random();
+        int randomIndex = random.nextInt(leafNodes.size());
+        return leafNodes.get(randomIndex);
+    }
+    private void collectLeafNodes(TreeNode node, List<TreeNode> leafNodes) {
+        if (node != null) {
+            if (node.left == null && node.right == null) {
+                // Node is a leaf, add it to the list
+                leafNodes.add(node);
+            } else {
+                // Recursively collect leaf nodes in the left and right subtrees
+                collectLeafNodes(node.left, leafNodes);
+                collectLeafNodes(node.right, leafNodes);
+            }
+        }
+    }
+    //tree exercise 1 (general  recursive delete func)
+
+    public void deleteKey(int key) {
+        root = deleteRec(root, key);
+    }
+    private TreeNode deleteRec(TreeNode root, int key) {
+        if (root == null) return root;
+
+        // Recur down the tree
+        if (key < root.data)
+            root.left = deleteRec(root.left, key);
+        else if (key > root.data)
+            root.right = deleteRec(root.right, key);
+        else {
+            // Node with only one child or no child
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+
+            // Node with two children: Get the inorder successor
+            root.data = minValue(root.right);
+
+            // Delete the inorder successor
+            root.right = deleteRec(root.right, root.data);
+        }
+
+        return root;
+    }
+
+    private int minValue(TreeNode root) {
+        TreeNode temp = root;
+        while (temp.left != null){
+            temp = temp.left;
+        }
+        return temp.data;
     }
 
     public void prettyPrint(){

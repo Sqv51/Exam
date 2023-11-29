@@ -48,4 +48,37 @@ public class Queue {
         return largest;
     }
 
+    public void moveToFront() {
+        if (isEmpty() || first == last) {
+            // If the queue is empty or has only one element, no need to move.
+            return;
+        }
+
+        Node current = first;
+        Node secondToLast = null;
+
+        while (current.next != null) {
+            secondToLast = current;
+            current = current.next;
+        }
+
+        // Move the last element to the front
+        assert secondToLast != null;
+        secondToLast.next = null;
+        current.next = first;
+        first = current;
+    }
+
+    void insertSecond(Node newNode){
+        if (isEmpty() || first == last) {
+            // If the queue is empty or has only one element, no need to move.
+            enqueue(newNode);
+        }
+
+        Node temp = first.next;
+        first.next = newNode;
+         newNode.next = temp;
+    }
+
+
 }
