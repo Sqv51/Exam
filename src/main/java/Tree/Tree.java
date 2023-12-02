@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+
+
 public class Tree {
 
     protected TreeNode root;
@@ -171,5 +173,139 @@ public class Tree {
         return 1 + Integer.max(leftheight,rightheight);
 
     }
+
+    //excecise 12
+    void swapChildren() {
+        //swap left and right children of all nodes
+        //swapChildren(root);
+
+    }
+
+
+    //recursive binary tree search
+    public TreeNode searchRec(int key){
+        //binary tree search but this time recursive
+        if(key == root.data){
+            return root;
+        } else if (key < root.data){
+            return searchRec(root.left.data);
+        } else {
+            return searchRec(root.right.data);
+        }
+
+    }
+
+    //iterative binary tree search
+    public TreeNode searchIter(int key){
+        //binary tree search but this time iterative
+        TreeNode tmp = root;
+        while (tmp != null){
+            if (tmp.data == key){
+                return tmp;
+            } else if (tmp.data > key){
+                tmp = tmp.left;
+            } else {
+                tmp = tmp.right;
+            }
+        }
+        return null;
+    }
+
+    //iterative minimum search
+    public TreeNode minIter(){
+        TreeNode tmp = root;
+        while (tmp.left != null){
+            tmp = tmp.left;
+        }
+        return tmp;
+    }
+    //iterative maximum search
+    public TreeNode maxIter(){
+        TreeNode tmp = root;
+        while (tmp.right != null){
+            tmp = tmp.right;
+        }
+        return tmp;
+    }
+    //recursive minimum search
+    public TreeNode minRec(TreeNode root){
+        if (root.left == null){
+            return root;
+        } else {
+            return minRec(root.left);
+        }
+    }
+    //recursive maximum search
+    public TreeNode maxRec(TreeNode root){
+        if (root.right == null){
+            return root;
+        } else {
+            return maxRec(root.right);
+        }
+    }
+
+    //binary search tree preoder traversal
+    public void preorder(TreeNode root){
+        if (root != null){
+            System.out.println(root.data);
+            preorder(root.left);
+            preorder(root.right);
+        }
+    }
+    //binary search tree inorder traversal
+    public void inorder(TreeNode root){
+        if (root != null){
+            inorder(root.left);
+            System.out.println(root.data);
+            inorder(root.right);
+        }
+    }
+    //binary search tree postorder traversal
+    public void postorder(TreeNode root){
+        if (root != null){
+            postorder(root.left);
+            postorder(root.right);
+            System.out.println(root.data);
+        }
+    }
+
+    //non recursive tree traversal with List stack including node count
+    public int nonRecursiveTraversal(){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        int count = 0;
+        while (tmp != null || !stack.isEmpty()){
+            if (tmp != null){
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                count++;
+                tmp = tmp.right;
+            }
+        }
+        return count;
+    }
+    //non recursive tree traversal with queue including node count with java queue
+    public int nonRecursiveTraversal2(){
+        java.util.Queue<TreeNode> queue = new java.util.LinkedList<>();
+        TreeNode tmp = root;
+        int count = 0;
+        while (tmp != null || !queue.isEmpty()){
+            if (tmp != null){
+                queue.add(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = queue.remove();
+                count++;
+                tmp = tmp.right;
+            }
+        }
+        return count;
+    }
+
+
+
+
 
 }

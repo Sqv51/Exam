@@ -34,8 +34,18 @@ public class Queue {
         return result;
     }
     void moveToRear(){
-        Node r = dequeue();
-        enqueue(r);
+        ///move the first element to the rear of the queue
+        if (isEmpty() || first == last) {
+            // If the queue is empty or has only one element, no need to move.
+            return;
+        }
+        //else
+        Node temp = first;
+        first = first.next;
+        last.next = temp;
+        last = temp;
+        last.next = null;
+
     }
 
     int largest (){
