@@ -3,7 +3,7 @@ package Tree;
 public class BTreeNode {
 
     private int[] K;
-    private BTreeNode[] children;
+    public BTreeNode[] children;
     private int m;
     private int d;
     private boolean leaf;
@@ -27,7 +27,7 @@ public class BTreeNode {
         return null;
     }
 
-    private int position(int value){
+    public int position(int value){
         if (m == 0){
             return -1;
         }
@@ -41,6 +41,11 @@ public class BTreeNode {
             }
         }
         return -1;
+    }
+    //btreenode isLeaf
+    public boolean isLeaf(){
+       return leaf;
+
     }
 
 

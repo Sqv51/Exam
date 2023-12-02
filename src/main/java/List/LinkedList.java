@@ -140,4 +140,29 @@ public class LinkedList {
         }
     }
 
+    public void print() {
+        Node tmp = head;
+        while (tmp != null) {
+            System.out.print(tmp + " ");
+            tmp = tmp.getNext();
+        }
+        System.out.println();
+    }
+
+    public void delete(int value) {
+        Node tmp, previous;
+        tmp = head;
+        previous = null;
+        while (tmp != null && tmp.data != value) {
+            previous = tmp;
+            tmp = tmp.next;
+        }
+        if (tmp != null) {
+            if (previous != null) {
+                previous.next = tmp.next;
+            } else {
+                head = tmp.next;
+            }
+        }
+    }
 }
