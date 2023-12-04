@@ -90,5 +90,44 @@ public class Queue {
          newNode.next = temp;
     }
 
+    //reverse first k elements of a queue
+    public void reverseK(int k){
+        if (isEmpty() || first == last) {
+            // If the queue is empty or has only one element, no need to move.
+            return;
+        }
+        Node current = first;
+        //new queue
+        Queue queue = new Queue();
+        Stack stack = new Stack();
+        //for loop k times
+        for (int i = 0; i < k; i++) {
+            stack.push(this.dequeue());
 
+        }
+        //add first k elements to new queue from stack
+        while (!stack.isEmpty()){
+            queue.enqueue(stack.pop());
+        }
+        //add the rest of the elements to the new queue
+        while (!this.isEmpty()){
+            queue.enqueue(this.dequeue());
+        }
+        //set the new queue to the old queue
+        this.first = queue.first;
+
+
+
+
+    }
+
+
+    public void print() {
+        Node tmp = first;
+        while (tmp != null) {
+            System.out.print(tmp + " ");
+            tmp = tmp.getNext();
+        }
+        System.out.println();
+    }
 }

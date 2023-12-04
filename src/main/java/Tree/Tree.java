@@ -304,8 +304,27 @@ public class Tree {
         return count;
     }
 
+    //Given a Binary Search Tree (BST), write a function findLargestSmallerThanK(root, k) that returns the largest value in the BST that is smaller than a given integer k. Assume the BST does not contain duplicate values.
+
+public int findLargestSmallerThanK(TreeNode root, int k) {
+        // your code goes here
+        int result = 0;
+        while (root != null){
+            if (root.data < k){
+                result = root.data;
+                root = root.right;
+            } else {
+                root = root.left;
+            }
+        }
+        return result;
+    }
 
 
 
 
+    public void print() {
+        //prind pretty print
+        prettyPrint();
+    }
 }

@@ -1,5 +1,9 @@
 package Array;
 
+import List.Queue;
+import Tree.TreeNode;
+import Tree.Tree;
+
 public class Hash {
 
     private Element[] table;
@@ -86,6 +90,15 @@ public class Hash {
         }
     }
 
+
+    //Write an hash function that maps a binary search tree into an hash
+    //value. Assume that the hash value of a tree can be obtained first by
+    //summing up the key values of the nodes and then hashing the sum.
+    int hashFunction(Tree a){
+        int sum = 0;
+
+        return sum;
+    }
 
     //toString override
     @Override

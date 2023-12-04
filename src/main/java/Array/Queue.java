@@ -71,4 +71,22 @@ public class Queue {
         return largest;
     }
 
+    //resize queue
+    public void resizeQueue(int capacity){
+        Element[] newQueue = new Element[capacity];
+        int i = first;
+        int j = 0;
+        while (i != last) {
+            newQueue[j] = array[i];
+            i = (i + 1) % N;
+            j++;
+        }
+
+        newQueue[j] = array[last]; // Copy the last element
+
+        first = 0;
+        last = j;
+        N   = capacity;
+        array = newQueue;
+    }
 }
