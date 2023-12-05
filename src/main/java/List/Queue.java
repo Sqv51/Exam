@@ -33,7 +33,7 @@ public class Queue {
         }
         return result;
     }
-    void moveToRear(){
+    public void moveToRear(){
         ///move the first element to the rear of the queue
         if (isEmpty() || first == last) {
             // If the queue is empty or has only one element, no need to move.
@@ -79,7 +79,7 @@ public class Queue {
         first = current;
     }
 
-    void insertSecond(Node newNode){
+    public void insertSecond(Node newNode){
         if (isEmpty() || first == last) {
             // If the queue is empty or has only one element, no need to move.
             enqueue(newNode);
@@ -119,6 +119,48 @@ public class Queue {
 
 
 
+    }
+   //divide a queue into two queues return a queue of odd indexed elements and the original queue is even indexed elements
+    public Queue divide(){
+        Queue queue = new Queue();
+        Node temp = first;
+        int i = 0;
+        //add odd indexed elements to new queue while removing them from the old queue using linked list deletion
+        while (temp != null){
+            if (i % 2 == 1){
+                queue.enqueue(temp);
+                //delete the node without using the delete method from the original queue
+                delete(temp);
+                temp = temp.getNext();
+
+            }
+            else {
+                temp = temp.getNext();
+            }
+            i++;
+        }
+
+        return queue;
+    }
+
+    private void delete(Node temp) {
+        Node current = first;
+        Node previous = null;
+        while (current != null){
+            if (current == temp){
+                if (previous == null){
+                    first = current.getNext();
+                }
+                else {
+                    previous.setNext(current.getNext());
+                }
+                return;
+            }
+            else {
+                previous = current;
+                current = current.getNext();
+            }
+        }
     }
 
 
