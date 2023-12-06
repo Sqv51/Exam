@@ -121,27 +121,34 @@ public class Queue {
 
     }
    //divide a queue into two queues return a queue of odd indexed elements and the original queue is even indexed elements
-    public Queue divide(){
-        Queue queue = new Queue();
-        Node temp = first;
-        int i = 0;
-        //add odd indexed elements to new queue while removing them from the old queue using linked list deletion
-        while (temp != null){
-            if (i % 2 == 1){
-                queue.enqueue(temp);
-                //delete the node without using the delete method from the original queue
-                delete(temp);
-                temp = temp.getNext();
+   public Queue divide() {
+       Queue queue = new Queue();
+       Node temp = first;
+       int i = 0;
+       Node previous = null; // Move outside the loop
 
-            }
-            else {
-                temp = temp.getNext();
-            }
-            i++;
-        }
+       // Add odd indexed elements to a new queue while removing them from the old queue using linked list deletion
+       while (temp != null) {
+           if (i % 2 == 1) {
+               queue.enqueue(temp);
 
-        return queue;
-    }
+               // Delete the node from the old queue
+               if (previous == null) {
+                   first = temp.getNext();
+               } else {
+                   previous.setNext(temp.getNext());
+               }
+           } else {
+               previous = temp;
+           }
+
+           temp = temp.getNext();
+           i++;
+       }
+
+       return queue;
+   }
+
 
     private void delete(Node temp) {
         Node current = first;

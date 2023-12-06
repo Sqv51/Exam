@@ -8,19 +8,23 @@ import Tree.Tree;
 import java.util.ArrayList;
 import java.util.List;
 import List.Queue;
+import Array.Hash;
+
 
 public class Test {
 
     public static void main(String[] args) {
-        //create a que with elements from 1 to 10
+        //queue with 10 elements
         Queue queue = new Queue();
-        for (int i = 0; i <= 10; i++) {
-            queue.enqueue(new Node(i));
+        for(int i = 0; i < 10; i++){
+            queue.enqueue( new Node(i));
         }
 
+        Queue queue2 = queue.divide();
+        System.out.println("Queue 1");
         queue.print();
-        queue.reverseK(5);
-        queue.print();
+        System.out.println("Queue 2");
+        queue2.print();
 
 
 

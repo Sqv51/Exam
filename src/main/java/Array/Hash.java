@@ -56,16 +56,48 @@ public class Hash {
     //9 return table[address];
     //10 }
 
-    public void delete(int value){
-        int address;
-        address = hashFunction(value);
-        while (table[address] != null && !deleted[address] && table[address].getData() != value){
-            address = (address + 1) % N;
-        }
-        if (table[address] != null && table[address].getData() == value){
-            deleted[address] = true;
+    public void delete(int value) {
+        int address = hashFunction(value);
+
+        while (table[address] != null) {
+            if (!deleted[address] && table[address].getData() == value) {
+                deleted[address] = true; // Mark the element as deleted
+                return; // Exit the method after deleting the first occurrence
+            }
+
+            address = (address + 1) % N; // Move to the next slot
         }
     }
+    public void deleteAllOccurrences(int value) {
+        for (int i = 0; i < N; i++) {
+            if (table[i] != null && !deleted[i] && table[i].getData() == value) {
+                deleted[i] = true; // Mark the element as deleted
+            }
+        }
+    }
+    public Hash simplify(){
+        Hash simple = new Hash(N);
+        for(int i = 0; i<N ;i++){
+            if(table[i]!=null){
+                int address=hashFunction(table[i].getData());
+                while(simple.table[address]!=null){
+                    if(simple.table[address].getData()==table[i].getData()){
+                        break;
+                    }
+                    address=(address+1)% N;
+                }
+               // if (simple.table[address] != null){
+               //     simple.deleted[address] = false;
+               // }
+                simple.table[address] = table[i];
+            }
+        }
+        return simple;
+
+    }
+
+
+
     //void delete(int value){
     //2 int address;
     //3 address = hashFunction(value);
@@ -99,6 +131,15 @@ public class Hash {
 
         return sum;
     }
+    public double loadFactor(){
+        int count = 0;
+        for (int i = 0; i < N; i++){
+            if (table[i] != null && !deleted[i]){
+                count++;
+            }
+        }
+        return (double) count / N;
+    }
 
     //toString override
     @Override
@@ -122,5 +163,49 @@ public class Hash {
             }
         }
     }
+
+    public int between(int a, int b){
+        int result = 0;
+        for (int i = 0; i < N; i++){
+            if (table[i] != null && !deleted[i] && table[i].getData() >= a && table[i].getData() <= b){
+                result++;
+            }
+        }
+        return result;
+    }
+    public void undelete(int value){
+        int address;
+        address = hashFunction(value);
+        while (table[address] != null && !deleted[address] && table[address].getData() != value){
+            address = (address + 1) % N;
+        }
+        if (table[address] != null && table[address].getData() == value){
+            deleted[address] = false;
+        }
+    }
+    public int numberOfEmptySlots(){
+        int result = 0;
+        for (int i = 0; i < N; i++){
+            if (table[i] == null || deleted[i]){
+                result++;
+            }
+        }
+        return result;
+    }
+    public void deleteAll(int x){
+        int address;
+        address = hashFunction(x);
+        while (table[address] != null && !deleted[address] && table[address].getData() != x){
+            address = (address + 1) % N;
+            if (table[address] != null && table[address].getData() == x){
+                deleted[address] = true;
+            }
+
+        }
+
+
+
+    }
+
 
 }

@@ -41,4 +41,61 @@ public class Hash {
             table[i].print();
         }
     }
+
+    public Node maximum(){
+        Node result = new Node(Integer.MIN_VALUE);
+        for(int i = 0; i<N ;i++){
+            if(!table[i].isEmpty()){
+                LinkedList linkedlist = table[i];
+                Node tmp = linkedlist.head;
+                Node maxNode=tmp;
+
+                while(tmp.next!=null){
+                    if(tmp.next.data>tmp.data){
+                        maxNode=tmp.next;
+
+                    }
+                    tmp=tmp.next;
+                }
+                if(maxNode.data>result.data){
+                    result= maxNode;
+                }
+            }
+        }
+
+        return result;
+    }
+    public double loadFactor(){
+        int count = 0;
+        for (int i = 0; i < N; i++){
+            Node temp = table[i].head;
+           while (temp != null){
+               count++;
+               temp = temp.next;
+           }
+        }
+        return (double) count / N;
+    }
+    public int between(int a, int b){
+        int count = 0;
+        for (int i = 0; i < N; i++){
+            Node temp = table[i].head;
+            while (temp != null){
+                if (temp.data >= a && temp.data <= b){
+                    count++;
+                }
+                temp = temp.next;
+            }
+        }
+        return count;
+    }
+    public int numberOfEmptySlots(){
+      int count = 0;
+        for (int i = 0; i < N; i++){
+            if (table[i].isEmpty()){
+                count++;
+            }
+        }
+        return count;
+    }
 }

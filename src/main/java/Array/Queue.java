@@ -43,6 +43,7 @@ public class Queue {
         return null;
     }
     public void doubleQueue(){
+
        Element[] newQueue = new Element[2*N];
         int i = first;
         int j = 0;
@@ -89,4 +90,5 @@ public class Queue {
         N   = capacity;
         array = newQueue;
     }
+
 }
