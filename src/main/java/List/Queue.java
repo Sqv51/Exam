@@ -96,7 +96,7 @@ public class Queue {
             // If the queue is empty or has only one element, no need to move.
             return;
         }
-        Node current = first;
+
         //new queue
         Queue queue = new Queue();
         Stack stack = new Stack();

@@ -14,17 +14,22 @@ import Array.Hash;
 public class Test {
 
     public static void main(String[] args) {
-        //queue with 10 elements
-        Queue queue = new Queue();
-        for(int i = 0; i < 10; i++){
-            queue.enqueue( new Node(i));
-        }
+        //Binary search tree add random numbers
+        Tree tree = new Tree();
+        tree.iterativeInsert(new TreeNode(4));
+        tree.iterativeInsert(new TreeNode(2));
+        tree.iterativeInsert(new TreeNode(3));
+        tree.iterativeInsert(new TreeNode(1));
+        tree.iterativeInsert(new TreeNode(6));
+        tree.iterativeInsert(new TreeNode(5));
+        tree.iterativeInsert(new TreeNode(7));
 
-        Queue queue2 = queue.divide();
-        System.out.println("Queue 1");
-        queue.print();
-        System.out.println("Queue 2");
-        queue2.print();
+        tree.prettyPrint();
+
+        System.out.println("***********");
+        tree.swapChildren5();
+        tree.prettyPrint();
+        System.out.println("***********");
 
 
 

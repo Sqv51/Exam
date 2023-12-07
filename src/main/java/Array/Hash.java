@@ -206,6 +206,20 @@ public class Hash {
 
 
     }
+    //Write an hash function that maps the key values in an hash table into
+    //an hash value. Assume that the hash value of an hash table can be
+    //obtained first by summing up the key values of the elements in the
+    //hash table and then hashing the sum. Write the function for array implementation. Assume also that linear probing is used as the collision
+    //strategy. Do not use any class or external methods except hashFunction.
+    int hashFunctionItSelf (){
+        int sum = 0;
+        for (int i = 0; i < N; i++){
+            if (table[i] != null && !deleted[i]){
+                sum += table[i].getData();
+            }
+        }
+        return sum % N;
+    }
 
 
 }

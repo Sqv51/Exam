@@ -120,8 +120,8 @@ public class Tree {
     private int leafCount2(TreeNode node, int count) {
         if (node != null) {
             int temp = count;
-            count += isLeaf(node.left);
-            count += isLeaf(node.right);
+           // count += isLeaf(node.left);
+            //count += isLeaf(node.right);
             count += leafCount2(node.left, temp);
             count += leafCount2(node.right, temp);
             return count;
@@ -129,14 +129,14 @@ public class Tree {
         return 0;
     }
 
-    private int isLeaf(TreeNode node) {
+    private boolean isLeaf(TreeNode node) {
         if (node == null) {
-            return 0;
+            return false;
         }
         if (node.left == null && node.right == null) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 
     //exercise24 binary tree versiyon
@@ -164,7 +164,7 @@ public class Tree {
     }
 
     //excecise 13
-    int height(TreeNode root){
+    /*int height(TreeNode root){
         if(root == null){return 0;}
 
         int leftheight = height(root.left);
@@ -172,14 +172,32 @@ public class Tree {
 
         return 1 + Integer.max(leftheight,rightheight);
 
-    }
+    }*/
 
-    //excecise 12
-    void swapChildren() {
-        //swap left and right children of all nodes
-        //swapChildren(root);
+    //excecise 12 swaps all left and right children
+    public void swapChildren() {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
 
+        while (tmp != null || !stack.isEmpty()) {
+            if (tmp != null) {
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+
+                // Swap children
+                TreeNode curr = tmp.left;
+                tmp.left = tmp.right;
+                tmp.right = curr;
+
+                // End of swap
+                tmp = tmp.left;  // Fixed this line to move to the next node in the in-order traversal
+            }
+        }
     }
+    //reverse the tree
+
 
 
     //recursive binary tree search
@@ -320,11 +338,304 @@ public int findLargestSmallerThanK(TreeNode root, int k) {
         return result;
     }
 
+    int height(){
+        if (root == null){return 0;}
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        int height = 0;
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if (isLeaf(node)){
+                height = Math.max(height,stack.size());
+            }
+            if (node.left != null){
+                stack.push(node.left);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+            }
 
-
-
-    public void print() {
-        //prind pretty print
-        prettyPrint();
+        }
+        return height;
     }
+    public int height2(){
+        int leftHeight = 0;
+        int rightHeight = 0;
+        if(root == null){
+            return 0;
+        }
+        if(root.left != null){
+            leftHeight++;
+            Tree leftTree = new Tree();
+            leftTree.setRoot(root.left);
+            leftHeight += leftTree.height2();
+        }
+        if(root.right != null){
+            rightHeight++;
+            Tree rightTree = new Tree();
+            rightTree.setRoot(root.right);
+            rightHeight += rightTree.height2();
+        }
+        return Math.max(leftHeight, rightHeight);
+    }
+
+    public int height(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+    public int height2(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        if (leftHeight > rightHeight){
+            return 1 + leftHeight;
+        } else {
+            return 1 + rightHeight;
+        }
+    }
+
+    //iterative search
+    public TreeNode search(int data){
+        TreeNode tmp = root;
+        while (tmp != null && tmp.data != data){
+            if (data < tmp.data){
+                tmp = tmp.left;
+            } else {
+                tmp = tmp.right;
+            }
+        }
+        return tmp;
+    }
+    public int myfunc(){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        int count = 0;
+        while (tmp != null || !stack.isEmpty()){
+            if (tmp != null){
+                if(tmp.data%3 == 0){
+                    count++;
+                } else if (tmp.data%7 == 0) {
+                    count--;
+                }
+                else {
+                    count = count *2;
+                }
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void increaseByOne(){
+        //traverse the tree and add 1 to each node value
+        //use a stack to store the nodes
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        while (tmp != null || !stack.isEmpty()){
+            if (tmp != null){
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                tmp.data++;
+                tmp = tmp.right;
+            }
+        }
+
+    }
+    //traverse the tree and add divide each node value by 2 use queue
+    public void divideByTwo(){
+        java.util.Queue<TreeNode> queue = new java.util.LinkedList<>();
+        TreeNode tmp = root;
+        while (tmp != null || !queue.isEmpty()){
+            if (tmp != null){
+                queue.add(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = queue.remove();
+                tmp.data = tmp.data/2;
+                tmp = tmp.right;
+            }
+        }
+    }
+    //use inorder traversal to print the tree using stack
+    public void inorderTraversal(){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        while (tmp != null || !stack.isEmpty()){
+            if (tmp != null){
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                System.out.println(tmp.data);
+                tmp = tmp.right;
+            }
+        }
+    }
+    //use preorder traversal to print the tree using stack
+    public void preorderTraversal(){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        while (tmp != null || !stack.isEmpty()){
+            if (tmp != null){
+                System.out.println(tmp.data);
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                tmp = tmp.right;
+            }
+        }
+    }
+    public void postorderTraversalPrint() {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode tmp = root;
+        while (tmp != null || !stack.isEmpty()) {
+            if (tmp != null) {
+                stack.push(tmp);
+                stack.push(tmp);
+                tmp = tmp.left;
+            } else {
+                tmp = stack.pop();
+                if (!stack.isEmpty() && stack.peek() == tmp) {
+                    tmp = tmp.right;
+                } else {
+                    System.out.println(tmp.data);
+                    tmp = null;
+                }
+            }
+        }
+    }
+    public void postorderTraversal(){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        TreeNode lastVisited = null;
+        while(!stack.isEmpty() || node != null){
+            if(node != null){
+                stack.push(node);
+                node = node.left;
+            } else {
+                TreeNode peekNode = stack.peek();
+                if(peekNode.right != null && lastVisited != peekNode.right){
+                    node = peekNode.right;
+                } else {
+                    System.out.println(peekNode.data);
+                    lastVisited = stack.pop();
+                }
+            }
+        }
+    }
+    public void swapChildren2(){
+        swapChildren(root);
+    }
+
+    private void swapChildren(TreeNode node){
+        if(node != null){
+            swapChildren(node.left);
+            swapChildren(node.right);
+
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+        }
+    }
+    /*Write a function that swaps left and right children
+    of all nodes in a binary search tree. */
+    public void swapChildren3(){
+        Stack<TreeNode> stack = new Stack();
+        TreeNode node = root;
+        stack.push(node);
+        while(!stack.isEmpty()){
+            node = stack.pop();
+            TreeNode tmp = node.left;
+            node.left = node.right;
+            node.right = tmp;
+            if(tmp != null) {
+                if (tmp.right != null) {
+                    stack.push(tmp.right);
+                }
+                if (tmp.left != null) {
+                    stack.push(tmp.left);
+                }
+            }
+        }
+    }
+    public void changeChild(TreeNode root){
+        if(root==null){
+            return;
+        }
+        if(root.left!=null&&root.right==null){
+            root.right=root.left;
+            root.left=null;
+            changeChild(root.right);
+
+        }
+        else if(root.left==null&&root.right!=null){
+            root.left=root.right;
+            root.right=null;
+            changeChild(root.left);
+        }
+        else if(root.left!=null&&root.right!=null){
+            changeChild(root.left);
+            changeChild(root.right);
+        }
+
+    }
+    //recursive postorder traversal
+    public void postorderTraversal2(TreeNode node){
+        if (node != null){
+            postorderTraversal2(node.left);
+            postorderTraversal2(node.right);
+            System.out.println(node.data);
+        }
+    }
+    public void swapChildren4() {
+        root = swapChildrenRecursive(root);
+    }
+
+    private TreeNode swapChildrenRecursive(TreeNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        // Swap left and right children for the current node
+        TreeNode l = node.getLeft();
+        TreeNode r = node.getRight();
+        node.setLeft(r);
+        node.setRight(l);
+
+        // Recursively swap children in the left and right subtrees
+        swapChildrenRecursive(r);
+        swapChildrenRecursive(l);
+
+        return node;
+    }
+    public void swapChildren5(){
+        Stack<TreeNode> stack = new Stack();
+        TreeNode node = root;
+        stack.push(node);
+        while(!stack.isEmpty()){
+            node = stack.pop();
+            TreeNode tmp = node.left;
+            node.left = node.right;
+            node.right = tmp;
+            if(node.left != null){
+                stack.push(node.left);
+            }
+            if(node.right != null){
+                stack.push(node.right);;
+            }
+        }
+    }
+
+
 }
